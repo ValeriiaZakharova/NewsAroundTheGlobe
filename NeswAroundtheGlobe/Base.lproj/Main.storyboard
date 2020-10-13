@@ -14,10 +14,29 @@
                     <view key="view" contentMode="scaleToFill" id="Hq6-8f-5xw">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="EKc-eX-RFe">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="gnb-5b-9Lm" id="Pki-yF-D3g"/>
+                                    <outlet property="delegate" destination="gnb-5b-9Lm" id="Kaf-0Q-VHX"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="gve-RQ-Mwu" firstAttribute="trailing" secondItem="EKc-eX-RFe" secondAttribute="trailing" id="3AU-dz-l15"/>
+                            <constraint firstItem="EKc-eX-RFe" firstAttribute="top" secondItem="gve-RQ-Mwu" secondAttribute="top" id="4aJ-mM-Web"/>
+                            <constraint firstItem="EKc-eX-RFe" firstAttribute="leading" secondItem="gve-RQ-Mwu" secondAttribute="leading" id="BSC-SR-0en"/>
+                            <constraint firstItem="gve-RQ-Mwu" firstAttribute="bottom" secondItem="EKc-eX-RFe" secondAttribute="bottom" id="sPq-t6-oas"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="gve-RQ-Mwu"/>
                     </view>
                     <navigationItem key="navigationItem" id="fTG-e5-qBz"/>
+                    <connections>
+                        <outlet property="tableView" destination="EKc-eX-RFe" id="tea-OF-1Yb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iKb-Vs-wpb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -34,18 +53,22 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bmg-hV-WQc">
                                 <rect key="frame" x="0.0" y="128" width="414" height="685"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="Gv0-Vv-GI9" id="djS-ys-sFk"/>
+                                    <outlet property="delegate" destination="Gv0-Vv-GI9" id="Otw-df-SMc"/>
+                                </connections>
                             </tableView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="9yE-Ti-40d">
                                 <rect key="frame" x="0.0" y="88" width="414" height="40"/>
                                 <subviews>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TQn-gw-vja">
-                                        <rect key="frame" x="0.0" y="0.0" width="206.5" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="207" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="MRT-rH-6BE"/>
                                         </constraints>
                                     </pickerView>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g1G-AZ-Vol">
-                                        <rect key="frame" x="207.5" y="0.0" width="206.5" height="40"/>
+                                        <rect key="frame" x="208" y="0.0" width="206" height="40"/>
                                     </pickerView>
                                 </subviews>
                             </stackView>
@@ -63,6 +86,9 @@
                         <viewLayoutGuide key="safeArea" id="UBN-h6-IZr"/>
                     </view>
                     <navigationItem key="navigationItem" id="PEg-7n-yKc"/>
+                    <connections>
+                        <outlet property="tableView" destination="Bmg-hV-WQc" id="RHN-lR-bAs"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkG-hK-LS9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
