@@ -51,42 +51,45 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Bmg-hV-WQc">
-                                <rect key="frame" x="0.0" y="128" width="414" height="685"/>
+                                <rect key="frame" x="0.0" y="132" width="414" height="681"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="Gv0-Vv-GI9" id="djS-ys-sFk"/>
                                     <outlet property="delegate" destination="Gv0-Vv-GI9" id="Otw-df-SMc"/>
                                 </connections>
                             </tableView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="9yE-Ti-40d">
-                                <rect key="frame" x="0.0" y="88" width="414" height="40"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4Ia-oc-529">
+                                <rect key="frame" x="20" y="93" width="374" height="34"/>
                                 <subviews>
-                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TQn-gw-vja">
-                                        <rect key="frame" x="0.0" y="0.0" width="207" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="MRT-rH-6BE"/>
-                                        </constraints>
-                                    </pickerView>
-                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g1G-AZ-Vol">
-                                        <rect key="frame" x="208" y="0.0" width="206" height="40"/>
-                                    </pickerView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Country" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OZm-3K-hbi">
+                                        <rect key="frame" x="0.0" y="0.0" width="183" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Category" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="P7V-Im-5XC">
+                                        <rect key="frame" x="191" y="0.0" width="183" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="9yE-Ti-40d" secondAttribute="trailing" id="0J2-Js-wyW"/>
-                            <constraint firstItem="9yE-Ti-40d" firstAttribute="leading" secondItem="UBN-h6-IZr" secondAttribute="leading" id="Cei-UD-IMN"/>
+                            <constraint firstItem="4Ia-oc-529" firstAttribute="leading" secondItem="UBN-h6-IZr" secondAttribute="leading" constant="20" id="HQw-hQ-HEH"/>
                             <constraint firstItem="Bmg-hV-WQc" firstAttribute="leading" secondItem="UBN-h6-IZr" secondAttribute="leading" id="Oac-s3-2nw"/>
                             <constraint firstItem="UBN-h6-IZr" firstAttribute="bottom" secondItem="Bmg-hV-WQc" secondAttribute="bottom" id="TQx-30-B0D"/>
-                            <constraint firstItem="Bmg-hV-WQc" firstAttribute="top" secondItem="g1G-AZ-Vol" secondAttribute="bottom" id="Vpb-Dd-u6D"/>
-                            <constraint firstItem="9yE-Ti-40d" firstAttribute="top" secondItem="UBN-h6-IZr" secondAttribute="top" id="YJ0-il-6GQ"/>
                             <constraint firstItem="UBN-h6-IZr" firstAttribute="trailing" secondItem="Bmg-hV-WQc" secondAttribute="trailing" id="nYX-cw-Mz4"/>
+                            <constraint firstItem="UBN-h6-IZr" firstAttribute="trailing" secondItem="4Ia-oc-529" secondAttribute="trailing" constant="20" id="oWH-y9-HcR"/>
+                            <constraint firstItem="4Ia-oc-529" firstAttribute="top" secondItem="UBN-h6-IZr" secondAttribute="top" constant="5" id="vPz-Cd-xaz"/>
+                            <constraint firstItem="Bmg-hV-WQc" firstAttribute="top" secondItem="4Ia-oc-529" secondAttribute="bottom" constant="5" id="xu8-je-sTq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UBN-h6-IZr"/>
                     </view>
                     <navigationItem key="navigationItem" id="PEg-7n-yKc"/>
                     <connections>
+                        <outlet property="categoryTextField" destination="P7V-Im-5XC" id="Kxh-Sp-bo3"/>
+                        <outlet property="countryTextField" destination="OZm-3K-hbi" id="Ign-ht-rQc"/>
                         <outlet property="tableView" destination="Bmg-hV-WQc" id="RHN-lR-bAs"/>
                     </connections>
                 </viewController>
