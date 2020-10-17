@@ -37,6 +37,8 @@ class NewsListViewController: UIViewController {
         setupGeneralCategoryPicker()
         countryTextField.delegate = self
         categoryTextField.delegate = self
+        countryTextField.tintColor = UIColor.clear
+        categoryTextField.tintColor = UIColor.clear
     }
     
     @objc
