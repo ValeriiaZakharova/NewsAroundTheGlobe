@@ -35,6 +35,10 @@ class NewsListViewController: UIViewController {
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "NewsCell")
         setupCountryCategoryPicker()
         setupGeneralCategoryPicker()
+        countryTextField.delegate = self
+        categoryTextField.delegate = self
+        countryTextField.tintColor = UIColor.clear
+        categoryTextField.tintColor = UIColor.clear
     }
     
     @objc
@@ -130,6 +134,10 @@ extension NewsListViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 }
 
 extension NewsListViewController: UITextFieldDelegate {
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return false
+    }
     
     @discardableResult
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
