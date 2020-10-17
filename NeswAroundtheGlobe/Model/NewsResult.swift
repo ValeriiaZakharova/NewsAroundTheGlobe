@@ -9,7 +9,7 @@
 import Foundation
 
 struct NewsResult: Decodable {
-    var status: Bool
+    var status: String
     var totalResults: Int
-    var articles: [NewsModel]
+    var articles: [NewsModel]?
 }
