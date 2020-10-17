@@ -16,7 +16,7 @@ class NewsListViewController: UIViewController {
     
     @IBOutlet weak var categoryTextField: UITextField!
     
-    private var news: [String] = []
+    private var news: [NewsModel] = []
     
     private let countryCategoryPicker = UIPickerView()
     
@@ -56,7 +56,17 @@ class NewsListViewController: UIViewController {
         categoryTextField.text = selectedGeneralCategory?.rawValue
         textFieldShouldReturn(categoryTextField)
     }
+ //MARK: - Private
+    
+    private func showError(_ error: String) {
+        let alertController = UIAlertController()
+        alertController.message = error
+        alertController.addAction(.init(title: "OK", style: .cancel, handler: nil))
+        present(alertController, animated: true)
+    }
 }
+
+//MARK: - UITableViewDataSource
 
 extension NewsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -71,9 +81,13 @@ extension NewsListViewController: UITableViewDataSource {
     }
 }
 
+//MARK: - UITableViewDelegate
+
 extension NewsListViewController: UITableViewDelegate {
     
 }
+
+//MARK: - PickerView
 
 private extension NewsListViewController {
     
@@ -110,6 +124,8 @@ private extension NewsListViewController {
     }
 }
 
+//MARK: - UIPickerViewDataSource, UIPickerViewDelegate
+
 extension NewsListViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
@@ -132,6 +148,8 @@ extension NewsListViewController: UIPickerViewDataSource, UIPickerViewDelegate {
         }
     }
 }
+
+//MARK: - UITextFieldDelegate
 
 extension NewsListViewController: UITextFieldDelegate {
     
