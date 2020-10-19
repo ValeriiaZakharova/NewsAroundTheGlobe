@@ -32,6 +32,10 @@ class NewsListViewController: UIViewController {
     
     private let networkProvider = NetworkProvider()
     
+    private var totalResults: Int = 0
+    
+    private var page = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "NewsCell")
@@ -42,7 +46,7 @@ class NewsListViewController: UIViewController {
         countryTextField.tintColor = UIColor.clear
         categoryTextField.tintColor = UIColor.clear
         
-        getNews()
+        reloadFeed()
     }
     
     @objc
@@ -51,7 +55,7 @@ class NewsListViewController: UIViewController {
         selectedCountryCategory = countryCategory[row]
         countryTextField.text = selectedCountryCategory?.title
         textFieldShouldReturn(countryTextField)
-        getNews()
+        reloadFeed()
     }
     
     @objc
@@ -60,22 +64,34 @@ class NewsListViewController: UIViewController {
         selectedGeneralCategory = generalCategory[row]
         categoryTextField.text = selectedGeneralCategory?.title
         textFieldShouldReturn(categoryTextField)
-        getNews()
+        reloadFeed()
     }
     
     //MARK: - Private
     
-    private func getNews() {
-        networkProvider.fetchNews(country: selectedCountryCategory?.requestParametres ?? "us", category: selectedGeneralCategory?.requestParametres ?? "general") { [weak self] news, error in
+    private func getNews(page: Int) {
+        networkProvider.fetchNews(country: selectedCountryCategory?.requestParametres ?? "us", category: selectedGeneralCategory?.requestParametres ?? "general", page: page) { [weak self] news, totalResults, error  in
             guard let self = self else { return }
             if let error = error {
                 self.showError(error.localizedDescription)
                 print(error)
             } else {
-                self.news = news
+                self.news.append(contentsOf: news)
+                self.totalResults = totalResults ?? 0
                 self.tableView.reloadData()
             }
         }
+    }
+    
+    private func reloadFeed() {
+        news = []
+        page = 1
+        getNews(page: 1)
+    }
+    
+    private func getMoreNews() {
+        page = page + 1
+        getNews(page: page)
     }
     
     private func showError(_ error: String) {
@@ -104,6 +120,24 @@ extension NewsListViewController: UITableViewDataSource {
         cell.setImage(model: post)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == news.count - 1 {
+            if news.count < totalResults {
+                let spinner = UIActivityIndicatorView()
+                spinner.style = .medium
+                spinner.startAnimating()
+                spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(80))
+                self.tableView.tableFooterView = spinner
+                self.tableView.tableFooterView?.isHidden = false
+               // self.getMoreNews()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+                    self.getMoreNews()
+                }
+                
+            }
+        }
     }
 }
 
