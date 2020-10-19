@@ -10,10 +10,10 @@ import Foundation
 
 final class NetworkProvider {
     
-    func fetchNews(country: String, category: String, complition: @escaping ([NewsModel], Error?) -> Void) {
+    func fetchNews(country: String, category: String, page: Int, complition: @escaping ([NewsModel], Int?, Error?) -> Void) {
         let apiKey = "dcf98ee62fa84cb1a032d16c0179e2e2"
         
-        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(country)&category=\(category)&apiKey=\(apiKey)") else { return }
+        guard let url = URL(string: "https://newsapi.org/v2/top-headlines?country=\(country)&category=\(category)&pageSize=10&page=\(page)&apiKey=\(apiKey)") else { return }
         
         URLSession.shared.dataTask(with: url) { data, response, error in
             if let response = response {
@@ -22,7 +22,7 @@ final class NetworkProvider {
             
             guard let data = data else {
                 DispatchQueue.main.async {
-                    complition([], error)
+                    complition([], nil, error)
                 }
                 return
             }
@@ -31,11 +31,11 @@ final class NetworkProvider {
                 let result = try JSONDecoder().decode(NewsResult.self, from: data)
                 print(result)
                 DispatchQueue.main.async {
-                    complition(result.articles ?? [], error)
+                    complition(result.articles ?? [], result.totalResults, error)
                 }
             } catch {
                 DispatchQueue.main.async {
-                    complition([], error)
+                    complition([], nil, error)
                 }
             }
         }.resume()
