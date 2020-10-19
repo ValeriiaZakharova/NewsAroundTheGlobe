@@ -16,7 +16,7 @@ class NewsListViewController: UIViewController {
     
     @IBOutlet weak var categoryTextField: UITextField!
     
-    private var news: [String] = []
+    private var news: [NewsModel] = []
     
     private let countryCategoryPicker = UIPickerView()
     
@@ -30,6 +30,8 @@ class NewsListViewController: UIViewController {
     
     private var selectedGeneralCategory: GeneralCategory?
     
+    private let networkProvider = NetworkProvider()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "NewsCell")
@@ -39,24 +41,52 @@ class NewsListViewController: UIViewController {
         categoryTextField.delegate = self
         countryTextField.tintColor = UIColor.clear
         categoryTextField.tintColor = UIColor.clear
+        
+        getNews()
     }
     
     @objc
     func countryCategoryDoneTapped() {
         let row = countryCategoryPicker.selectedRow(inComponent: 0)
         selectedCountryCategory = countryCategory[row]
-        countryTextField.text = selectedCountryCategory?.rawValue
+        countryTextField.text = selectedCountryCategory?.title
         textFieldShouldReturn(countryTextField)
+        getNews()
     }
     
     @objc
     func categoryGeneralDoneTapped() {
         let row = generalCategoryPicker.selectedRow(inComponent: 0)
         selectedGeneralCategory = generalCategory[row]
-        categoryTextField.text = selectedGeneralCategory?.rawValue
+        categoryTextField.text = selectedGeneralCategory?.title
         textFieldShouldReturn(categoryTextField)
+        getNews()
+    }
+    
+    //MARK: - Private
+    
+    private func getNews() {
+        networkProvider.fetchNews(country: selectedCountryCategory?.requestParametres ?? "us", category: selectedGeneralCategory?.requestParametres ?? "general") { [weak self] news, error in
+            guard let self = self else { return }
+            if let error = error {
+                self.showError(error.localizedDescription)
+                print(error)
+            } else {
+                self.news = news
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    private func showError(_ error: String) {
+        let alertController = UIAlertController()
+        alertController.message = error
+        alertController.addAction(.init(title: "OK", style: .cancel, handler: nil))
+        present(alertController, animated: true)
     }
 }
+
+//MARK: - UITableViewDataSource
 
 extension NewsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -66,14 +96,24 @@ extension NewsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell") as! NewsCell
+        let post = news[indexPath.row]
+        cell.authorLabel.text = post.author
+        cell.discriptionLabel.text = post.description
+        cell.publistedatLabel.text = post.publishedAt
+        cell.titleLabel.text = post.title
+        cell.setImage(model: post)
         
         return cell
     }
 }
 
+//MARK: - UITableViewDelegate
+
 extension NewsListViewController: UITableViewDelegate {
     
 }
+
+//MARK: - PickerView
 
 private extension NewsListViewController {
     
@@ -110,6 +150,8 @@ private extension NewsListViewController {
     }
 }
 
+//MARK: - UIPickerViewDataSource, UIPickerViewDelegate
+
 extension NewsListViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
@@ -133,6 +175,8 @@ extension NewsListViewController: UIPickerViewDataSource, UIPickerViewDelegate {
     }
 }
 
+//MARK: - UITextFieldDelegate
+
 extension NewsListViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -143,7 +187,7 @@ extension NewsListViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         switch textField {
         case countryTextField:
-            categoryTextField.becomeFirstResponder()
+            view.endEditing(true)
         case categoryTextField:
             view.endEditing(true)
         default:
