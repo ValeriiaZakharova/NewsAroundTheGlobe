@@ -22,6 +22,7 @@
 		CFB538532539873F00388488 /* NewsResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB538522539873F00388488 /* NewsResult.swift */; };
 		CFB53859253998DE00388488 /* CountryCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB53858253998DE00388488 /* CountryCategory.swift */; };
 		CFB5385B2539B0A500388488 /* GeneralCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB5385A2539B0A500388488 /* GeneralCategory.swift */; };
+		CFB5385F253AF89600388488 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB5385E253AF89600388488 /* NetworkProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		CFB538522539873F00388488 /* NewsResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsResult.swift; sourceTree = "<group>"; };
 		CFB53858253998DE00388488 /* CountryCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryCategory.swift; sourceTree = "<group>"; };
 		CFB5385A2539B0A500388488 /* GeneralCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralCategory.swift; sourceTree = "<group>"; };
+		CFB5385E253AF89600388488 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 		CFB5385425398E4000388488 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				CFB5385E253AF89600388488 /* NetworkProvider.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				CF39DA0925348B3C00999F43 /* AppDelegate.swift in Sources */,
 				CFB5385B2539B0A500388488 /* GeneralCategory.swift in Sources */,
 				CFB538492535B93B00388488 /* NewsWebViewController.swift in Sources */,
+				CFB5385F253AF89600388488 /* NetworkProvider.swift in Sources */,
 				CFB5384D2535C10A00388488 /* NewsCell.swift in Sources */,
 				CF39DA0B25348B3C00999F43 /* SceneDelegate.swift in Sources */,
 				CFB538472535AFA400388488 /* FavoriteNewsViewController.swift in Sources */,

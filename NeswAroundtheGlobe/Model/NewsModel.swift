@@ -9,18 +9,29 @@
 import Foundation
 
 struct NewsModel: Decodable {
-    var source: [Source]
-    var author: String
+    var source: Source
+    var author: String?
     var title: String
-    var description: String
+    var description: String?
     var url: String
-    var urlToImage: String
+    var urlToImage: String?
     var publishedAt: String
     var content: String?
     
     func date() -> Date? {
         let fornatter = ISO8601DateFormatter()
         return fornatter.date(from: publishedAt)
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case source
+        case author
+        case title
+        case description
+        case url
+        case urlToImage
+        case publishedAt
+        case content
     }
 }
 

@@ -31,7 +31,29 @@ class NewsCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-        
+        authorLabel.text = nil
+        publistedatLabel.text = nil
+        titleLabel.text = nil
+        discriptionLabel.text = nil
+        contentImageView.image = nil
+    }
+    
+    func setImage(model: NewsModel) {
+        if let urlStr = model.urlToImage, let url = URL(string: urlStr) {
+            DispatchQueue.global().async {
+                do {
+                    let data = try Data(contentsOf: url)
+                    let image = UIImage(data: data)
+                    DispatchQueue.main.async {
+                        self.contentImageView.image = image
+                    }
+                } catch {
+                    print(error)
+                }
+            }
+        } else {
+            self.contentImageView.image = .checkmark
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

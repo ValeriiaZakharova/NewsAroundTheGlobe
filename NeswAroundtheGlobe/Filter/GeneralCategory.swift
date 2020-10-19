@@ -29,5 +29,17 @@ enum GeneralCategory: String, CaseIterable {
         case .technology: return "Technology"
         }
     }
+    
+    var requestParametres: String{
+        switch self {
+        case .business: return "business"
+        case .entertainment: return "entertainment"
+        case .general: return "general"
+        case .health: return "health"
+        case .science: return "science"
+        case .sports: return "sports"
+        case .technology: return "technology"
+        }
+    }
 }
 
