@@ -29,7 +29,6 @@ final class NetworkProvider {
             
             do {
                 let result = try JSONDecoder().decode(NewsResult.self, from: data)
-                print(result)
                 DispatchQueue.main.async {
                     complition(result.articles ?? [], result.totalResults, error)
                 }
@@ -42,6 +41,4 @@ final class NetworkProvider {
     }
 }
 
-
 //https://newsapi.org/v2/top-headlines?country=us&category=general&apiKey=dcf98ee62fa84cb1a032d16c0179e2e2
-
