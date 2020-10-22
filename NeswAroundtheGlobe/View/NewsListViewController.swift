@@ -32,17 +32,20 @@ class NewsListViewController: UIViewController {
     
     private let networkProvider = NetworkProvider()
     
+    private let spinner = UIActivityIndicatorView()
+    
+    private var totalResults: Int = 0
+    
+    private var page = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "NewsCell")
         setupCountryCategoryPicker()
         setupGeneralCategoryPicker()
-        countryTextField.delegate = self
-        categoryTextField.delegate = self
-        countryTextField.tintColor = UIColor.clear
-        categoryTextField.tintColor = UIColor.clear
-        
-        getNews()
+        setupTextfield()
+        setupSpinner()
+        reloadFeed()
     }
     
     @objc
@@ -51,7 +54,7 @@ class NewsListViewController: UIViewController {
         selectedCountryCategory = countryCategory[row]
         countryTextField.text = selectedCountryCategory?.title
         textFieldShouldReturn(countryTextField)
-        getNews()
+        reloadFeed()
     }
     
     @objc
@@ -60,24 +63,50 @@ class NewsListViewController: UIViewController {
         selectedGeneralCategory = generalCategory[row]
         categoryTextField.text = selectedGeneralCategory?.title
         textFieldShouldReturn(categoryTextField)
-        getNews()
+        reloadFeed()
     }
     
     //MARK: - Private
     
-    private func getNews() {
-        networkProvider.fetchNews(country: selectedCountryCategory?.requestParametres ?? "us", category: selectedGeneralCategory?.requestParametres ?? "general") { [weak self] news, error in
+    private func getNews(page: Int) {
+        networkProvider.fetchNews(country: selectedCountryCategory?.requestParametres ?? "us", category: selectedGeneralCategory?.requestParametres ?? "general", page: page) { [weak self] news, totalResults, error  in
             guard let self = self else { return }
             if let error = error {
                 self.showError(error.localizedDescription)
                 print(error)
             } else {
-                self.news = news
+                self.news.append(contentsOf: news)
+                self.totalResults = totalResults ?? 0
                 self.tableView.reloadData()
             }
         }
     }
     
+    private func reloadFeed() {
+        news = []
+        page = 1
+        getNews(page: 1)
+    }
+    
+    private func getMoreNews() {
+        page = page + 1
+        getNews(page: page)
+    }
+    
+    private func setupSpinner() {
+        spinner.style = .medium
+        spinner.frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: tableView.bounds.width, height: CGFloat(40))
+        tableView.tableFooterView = spinner
+        tableView.tableFooterView?.isHidden = true
+    }
+    
+    private func setupTextfield() {
+        countryTextField.delegate = self
+        categoryTextField.delegate = self
+        countryTextField.tintColor = UIColor.clear
+        categoryTextField.tintColor = UIColor.clear
+    }
+
     private func showError(_ error: String) {
         let alertController = UIAlertController()
         alertController.message = error
@@ -105,17 +134,79 @@ extension NewsListViewController: UITableViewDataSource {
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row == news.count - 1 {
+            if news.count < totalResults {
+                print(news.count)
+                print(totalResults)
+                spinner.startAnimating()
+                self.tableView.tableFooterView?.isHidden = false
+                self.getMoreNews()
+            } else {
+                spinner.stopAnimating()
+                self.tableView.tableFooterView?.isHidden = true
+            }
+        }
+    }
 }
 
 //MARK: - UITableViewDelegate
 
-extension NewsListViewController: UITableViewDelegate {
+extension NewsListViewController: UITableViewDelegate {}
+
+//MARK: - UITextFieldDelegate
+
+extension NewsListViewController: UITextFieldDelegate {
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        return false
+    }
+    
+    @discardableResult
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField {
+        case countryTextField:
+            view.endEditing(true)
+        case categoryTextField:
+            view.endEditing(true)
+        default:
+            fatalError()
+        }
+        return true
+    }
+}
+
+//MARK: - UIPickerViewDataSource, UIPickerViewDelegate
+
+extension NewsListViewController: UIPickerViewDataSource, UIPickerViewDelegate {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        if countryTextField.isEditing {
+            return countryCategory.count
+        } else {
+            return generalCategory.count
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        
+        if countryTextField.isEditing {
+            return countryCategory[row].title
+        } else {
+            return generalCategory[row].title
+        }
+    }
 }
 
 //MARK: - PickerView
 
 private extension NewsListViewController {
+    
+    /// Refactor these two function: setupCountryCategoryPicker and setupGeneralCategoryPicker, make sure there is one function for both pickers
     
     func setupCountryCategoryPicker() {
         countryCategoryPicker.delegate = self
@@ -147,52 +238,5 @@ private extension NewsListViewController {
         
         categoryTextField.inputAccessoryView = toolbar
         categoryTextField.inputView = generalCategoryPicker
-    }
-}
-
-//MARK: - UIPickerViewDataSource, UIPickerViewDelegate
-
-extension NewsListViewController: UIPickerViewDataSource, UIPickerViewDelegate {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        
-        if countryTextField.isEditing {
-            return countryCategory.count
-        } else {
-            return generalCategory.count
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
-        if countryTextField.isEditing {
-            return countryCategory[row].title
-        } else {
-            return generalCategory[row].title
-        }
-    }
-}
-
-//MARK: - UITextFieldDelegate
-
-extension NewsListViewController: UITextFieldDelegate {
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        return false
-    }
-    
-    @discardableResult
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        switch textField {
-        case countryTextField:
-            view.endEditing(true)
-        case categoryTextField:
-            view.endEditing(true)
-        default:
-            fatalError()
-        }
-        return true
     }
 }
