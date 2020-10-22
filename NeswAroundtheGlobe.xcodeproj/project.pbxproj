@@ -91,13 +91,37 @@
 			path = NeswAroundtheGlobe;
 			sourceTree = "<group>";
 		};
+		CF4DE83B2541926200A4F062 /* NewsListViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CFB538442535AF4500388488 /* NewsListViewController.swift */,
+			);
+			path = NewsListViewController;
+			sourceTree = "<group>";
+		};
+		CF4DE83C2541927700A4F062 /* FavariteNewsViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CFB538462535AFA400388488 /* FavoriteNewsViewController.swift */,
+			);
+			path = FavariteNewsViewController;
+			sourceTree = "<group>";
+		};
+		CF4DE83D2541928E00A4F062 /* NewsWebViewController */ = {
+			isa = PBXGroup;
+			children = (
+				CFB538482535B93B00388488 /* NewsWebViewController.swift */,
+			);
+			path = NewsWebViewController;
+			sourceTree = "<group>";
+		};
 		CFB538432535AF0000388488 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				CFB5384A2535C0E500388488 /* NewsCell */,
-				CFB538442535AF4500388488 /* NewsListViewController.swift */,
-				CFB538462535AFA400388488 /* FavoriteNewsViewController.swift */,
-				CFB538482535B93B00388488 /* NewsWebViewController.swift */,
+				CF4DE83B2541926200A4F062 /* NewsListViewController */,
+				CF4DE83C2541927700A4F062 /* FavariteNewsViewController */,
+				CF4DE83D2541928E00A4F062 /* NewsWebViewController */,
 			);
 			path = View;
 			sourceTree = "<group>";

@@ -12,7 +12,7 @@ class FavoriteNewsViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    private var news: [String] = []
+    private var favoriteNews: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class FavoriteNewsViewController: UIViewController {
 
 extension FavoriteNewsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return news.count
+        return favoriteNews.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
