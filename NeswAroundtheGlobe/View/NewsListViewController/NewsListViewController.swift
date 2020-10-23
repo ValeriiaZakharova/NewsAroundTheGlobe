@@ -125,6 +125,7 @@ extension NewsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell") as! NewsCell
+        cell.delegate = self
         let post = news[indexPath.row]
         cell.authorLabel.text = post.author
         cell.discriptionLabel.text = post.description
@@ -180,7 +181,7 @@ extension NewsListViewController: UITextFieldDelegate {
 //MARK: - UIPickerViewDataSource, UIPickerViewDelegate
 
 extension NewsListViewController: UIPickerViewDataSource, UIPickerViewDelegate {
-    
+        
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -238,5 +239,26 @@ private extension NewsListViewController {
         
         categoryTextField.inputAccessoryView = toolbar
         categoryTextField.inputView = generalCategoryPicker
+    }
+}
+
+extension NewsListViewController: NewsCellDelegate {
+    
+    func saveToBookmark(cell: NewsCell) {
+        
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let post = news[indexPath.row]
+        
+        cell.bookmarkButton.tintColor = .blue
+        
+        NewsDataController.shared.favoriteNews.append(post)
+    }
+    
+    func sharePost(cell: NewsCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let post = news[indexPath.row]
+        let items = [post.url]
+        let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        present(activityVC, animated: true)
     }
 }

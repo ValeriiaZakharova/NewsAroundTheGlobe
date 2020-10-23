@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol NewsCellDelegate: class {
+    func saveToBookmark(cell: NewsCell)
+    func sharePost(cell: NewsCell)
+}
+
 class NewsCell: UITableViewCell {
 
     @IBOutlet weak var authorLabel: UILabel!
@@ -24,6 +29,7 @@ class NewsCell: UITableViewCell {
     
     @IBOutlet weak var shareButton: UIButton!
     
+    var delegate: NewsCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +42,7 @@ class NewsCell: UITableViewCell {
         titleLabel.text = nil
         discriptionLabel.text = nil
         contentImageView.image = nil
+        bookmarkButton.tintColor = .black
     }
     
     func setImage(model: NewsModel) {
@@ -58,15 +65,13 @@ class NewsCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
     
     @IBAction func saveToBookmark(_ sender: UIButton) {
-        
+        delegate?.saveToBookmark(cell: self)
     }
     
-    @IBAction func shareContent(_ sender: Any) {
-        
+    @IBAction func sharePost(_ sender: Any) {
+        delegate?.sharePost(cell: self)
     }
-    
 }
