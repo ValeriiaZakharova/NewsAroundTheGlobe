@@ -13,6 +13,7 @@
 		CF39DA1025348B3C00999F43 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF39DA0E25348B3C00999F43 /* Main.storyboard */; };
 		CF39DA1225348B4000999F43 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CF39DA1125348B4000999F43 /* Assets.xcassets */; };
 		CF39DA1525348B4000999F43 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CF39DA1325348B4000999F43 /* LaunchScreen.storyboard */; };
+		CF4DE83F2543080E00A4F062 /* NewsDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF4DE83E2543080E00A4F062 /* NewsDataController.swift */; };
 		CFB538452535AF4500388488 /* NewsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB538442535AF4500388488 /* NewsListViewController.swift */; };
 		CFB538472535AFA400388488 /* FavoriteNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB538462535AFA400388488 /* FavoriteNewsViewController.swift */; };
 		CFB538492535B93B00388488 /* NewsWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB538482535B93B00388488 /* NewsWebViewController.swift */; };
@@ -34,6 +35,7 @@
 		CF39DA1125348B4000999F43 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CF39DA1425348B4000999F43 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CF39DA1625348B4000999F43 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CF4DE83E2543080E00A4F062 /* NewsDataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsDataController.swift; sourceTree = "<group>"; };
 		CFB538442535AF4500388488 /* NewsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListViewController.swift; sourceTree = "<group>"; };
 		CFB538462535AFA400388488 /* FavoriteNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteNewsViewController.swift; sourceTree = "<group>"; };
 		CFB538482535B93B00388488 /* NewsWebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsWebViewController.swift; sourceTree = "<group>"; };
@@ -60,6 +62,7 @@
 		CF39D9FC25348B3B00999F43 = {
 			isa = PBXGroup;
 			children = (
+				CF4DE83E2543080E00A4F062 /* NewsDataController.swift */,
 				CF39DA0725348B3C00999F43 /* NeswAroundtheGlobe */,
 				CF39DA0625348B3C00999F43 /* Products */,
 			);
@@ -241,6 +244,7 @@
 				CFB5385F253AF89600388488 /* NetworkProvider.swift in Sources */,
 				CFB5384D2535C10A00388488 /* NewsCell.swift in Sources */,
 				CF39DA0B25348B3C00999F43 /* SceneDelegate.swift in Sources */,
+				CF4DE83F2543080E00A4F062 /* NewsDataController.swift in Sources */,
 				CFB538472535AFA400388488 /* FavoriteNewsViewController.swift in Sources */,
 				CFB538452535AF4500388488 /* NewsListViewController.swift in Sources */,
 				CFB538532539873F00388488 /* NewsResult.swift in Sources */,

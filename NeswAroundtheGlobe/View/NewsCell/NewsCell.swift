@@ -42,6 +42,7 @@ class NewsCell: UITableViewCell {
         titleLabel.text = nil
         discriptionLabel.text = nil
         contentImageView.image = nil
+        bookmarkButton.tintColor = .black
     }
     
     func setImage(model: NewsModel) {

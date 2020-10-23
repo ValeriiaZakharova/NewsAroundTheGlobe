@@ -243,7 +243,16 @@ private extension NewsListViewController {
 }
 
 extension NewsListViewController: NewsCellDelegate {
-    func saveToBookmark(cell: NewsCell) {}
+    
+    func saveToBookmark(cell: NewsCell) {
+        
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let post = news[indexPath.row]
+        
+        cell.bookmarkButton.tintColor = .blue
+        
+        NewsDataController.shared.favoriteNews.append(post)
+    }
     
     func sharePost(cell: NewsCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }

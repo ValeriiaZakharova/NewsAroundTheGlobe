@@ -12,14 +12,20 @@ class FavoriteNewsViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    private var favoriteNews: [String] = []
+    var favoriteNews: [NewsModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "NewsCell", bundle: nil), forCellReuseIdentifier: "NewsCell")
-        
+        favoriteNews = NewsDataController.shared.favoriteNews
+        tableView.reloadData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        favoriteNews = NewsDataController.shared.favoriteNews
+        tableView.reloadData()
+    }
 }
 
 extension FavoriteNewsViewController: UITableViewDataSource {
@@ -30,11 +36,16 @@ extension FavoriteNewsViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell") as! NewsCell
+        //cell.delegate = self
+        let post = favoriteNews[indexPath.row]
+        cell.authorLabel.text = post.author
+        cell.discriptionLabel.text = post.description
+        cell.publistedatLabel.text = post.publishedAt
+        cell.titleLabel.text = post.title
+        cell.setImage(model: post)
         
         return cell
     }
-    
-    
 }
 
 extension FavoriteNewsViewController: UITableViewDelegate {
