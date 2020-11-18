@@ -64,6 +64,14 @@ extension FavoriteNewsViewController: UITableViewDataSource {
 
 extension FavoriteNewsViewController: UITableViewDelegate {
     
+    //MARK: - Ask Dima why it works in this tap (navigation controller in different stack, we couldn't pass data but i can open webViewController
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "NewsWebViewController") as! NewsWebViewController
+        
+        vc.url = favoriteNews[indexPath.row].url
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension FavoriteNewsViewController: NewsCellDelegate {
