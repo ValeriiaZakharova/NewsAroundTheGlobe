@@ -100,7 +100,7 @@
         <!--News Web View Controller-->
         <scene sceneID="deT-Hp-uO7">
             <objects>
-                <viewController id="GQQ-QL-seP" customClass="NewsWebViewController" customModule="NeswAroundtheGlobe" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewsWebViewController" id="GQQ-QL-seP" customClass="NewsWebViewController" customModule="NeswAroundtheGlobe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uEs-57-dUE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
