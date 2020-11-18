@@ -26,6 +26,7 @@
 		CFB5385F253AF89600388488 /* NetworkProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFB5385E253AF89600388488 /* NetworkProvider.swift */; };
 		CFDF8CFC255952A100BD3E2C /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF8CFB255952A100BD3E2C /* NewsViewModel.swift */; };
 		CFDF8CFE25595D2700BD3E2C /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF8CFD25595D2700BD3E2C /* NewsService.swift */; };
+		CFDF8D01256545BA00BD3E2C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFDF8D00256545BA00BD3E2C /* WebKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +51,7 @@
 		CFB5385E253AF89600388488 /* NetworkProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProvider.swift; sourceTree = "<group>"; };
 		CFDF8CFB255952A100BD3E2C /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		CFDF8CFD25595D2700BD3E2C /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
+		CFDF8D00256545BA00BD3E2C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CFDF8D01256545BA00BD3E2C /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,6 +71,7 @@
 			children = (
 				CF39DA0725348B3C00999F43 /* NeswAroundtheGlobe */,
 				CF39DA0625348B3C00999F43 /* Products */,
+				CFDF8CFF256545BA00BD3E2C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -168,6 +172,14 @@
 				CFB5385A2539B0A500388488 /* GeneralCategory.swift */,
 			);
 			path = Filter;
+			sourceTree = "<group>";
+		};
+		CFDF8CFF256545BA00BD3E2C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CFDF8D00256545BA00BD3E2C /* WebKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

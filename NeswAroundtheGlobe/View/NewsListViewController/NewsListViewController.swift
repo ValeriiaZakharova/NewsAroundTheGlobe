@@ -48,6 +48,12 @@ class NewsListViewController: UIViewController {
         reloadFeed()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if let index = self.tableView.indexPathForSelectedRow{
+            self.tableView.deselectRow(at: index, animated: true)
+        }
+    }
+    
     @objc
     func countryCategoryDoneTapped() {
         let row = countryCategoryPicker.selectedRow(inComponent: 0)
@@ -66,14 +72,14 @@ class NewsListViewController: UIViewController {
         reloadFeed()
     }
     
-/// updates a single news in viewModels array after being picked favorite
+    /// updates a single news in viewModels array after being picked favorite
     func updateNews(news: NewsViewModel) {
         guard let index = findNewsIndex(identifier: news.identifier) else { return }
         viewModels[index] = news
         tableView.reloadData()
     }
     
-/// finds index of a single news in viewModels array by source.id
+    /// finds index of a single news in viewModels array by source.id
     func findNewsIndex(identifier: UUID) -> Int? {
         let newsIndex = viewModels.firstIndex(where: { internalNews -> Bool in
             return internalNews.identifier == identifier
@@ -124,7 +130,7 @@ class NewsListViewController: UIViewController {
         countryTextField.tintColor = UIColor.clear
         categoryTextField.tintColor = UIColor.clear
     }
-
+    
     private func showError(_ error: String) {
         let alertController = UIAlertController()
         alertController.message = error
@@ -151,7 +157,7 @@ extension NewsListViewController: UITableViewDataSource {
         cell.titleLabel.text = post.title
         cell.setImage(model: post)
         
-/// attached selected button to favorite post
+        /// attached selected button to favorite post
         cell.bookmarkButton.isSelected = post.isFavorite
         
         return cell
@@ -175,7 +181,15 @@ extension NewsListViewController: UITableViewDataSource {
 
 //MARK: - UITableViewDelegate
 
-extension NewsListViewController: UITableViewDelegate {}
+extension NewsListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "NewsWebViewController") as! NewsWebViewController
+        
+        vc.url = viewModels[indexPath.row].url
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
 
 //MARK: - UITextFieldDelegate
 
@@ -202,7 +216,7 @@ extension NewsListViewController: UITextFieldDelegate {
 //MARK: - UIPickerViewDataSource, UIPickerViewDelegate
 
 extension NewsListViewController: UIPickerViewDataSource, UIPickerViewDelegate {
-        
+    
     func numberOfComponents(in pickerView: UIPickerView) -> Int { 1 }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -269,9 +283,9 @@ extension NewsListViewController: NewsCellDelegate {
         
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         var post = viewModels[indexPath.row]
-
+        
         if !cell.bookmarkButton.isSelected {
-/// changes post.isFavorite = true to put news to favorite and updates viewmodels array
+            /// changes post.isFavorite = true to put news to favorite and updates viewmodels array
             post.isFavorite = true
             NewsDataController.shared.add(news: post)
             self.updateNews(news: post)
