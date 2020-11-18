@@ -58,12 +58,14 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cm1-HW-z6E">
                                 <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="V00-BX-MVr"/>
                                     <constraint firstAttribute="width" constant="44" id="VHA-KB-wQo"/>
                                 </constraints>
                                 <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" image="bookmark" catalog="system"/>
+                                <state key="selected" image="bookmark.fill" catalog="system"/>
                                 <connections>
                                     <action selector="saveToBookmark:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Auz-fr-Gca"/>
                                 </connections>
@@ -110,11 +112,12 @@
                 <outlet property="shareButton" destination="eyG-lz-JTy" id="alc-Kg-Crs"/>
                 <outlet property="titleLabel" destination="uRJ-Uh-ROh" id="U12-39-ju1"/>
             </connections>
-            <point key="canvasLocation" x="242.75362318840581" y="189.17410714285714"/>
+            <point key="canvasLocation" x="-120" y="72"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="bookmark" catalog="system" width="112" height="128"/>
+        <image name="bookmark.fill" catalog="system" width="112" height="128"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
     </resources>
 </document>

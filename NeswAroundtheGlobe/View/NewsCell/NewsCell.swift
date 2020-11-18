@@ -33,19 +33,22 @@ class NewsCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        bookmarkButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        bookmarkButton.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         authorLabel.text = nil
         publistedatLabel.text = nil
         titleLabel.text = nil
         discriptionLabel.text = nil
         contentImageView.image = nil
         bookmarkButton.tintColor = .black
+        bookmarkButton.isSelected = false
     }
     
-    func setImage(model: NewsModel) {
+    func setImage(model: NewsViewModel) {
         if let urlStr = model.urlToImage, let url = URL(string: urlStr) {
             DispatchQueue.global().async {
                 do {
