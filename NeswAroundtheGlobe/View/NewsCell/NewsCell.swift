@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol NewsCellDelegate: class {
+    func saveToBookmark(cell: NewsCell)
+    func sharePost(cell: NewsCell)
+}
+
 class NewsCell: UITableViewCell {
 
     @IBOutlet weak var authorLabel: UILabel!
@@ -24,21 +29,26 @@ class NewsCell: UITableViewCell {
     
     @IBOutlet weak var shareButton: UIButton!
     
+    var delegate: NewsCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        bookmarkButton.setImage(UIImage(systemName: "bookmark"), for: .normal)
+        bookmarkButton.setImage(UIImage(systemName: "bookmark.fill"), for: .selected)
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         authorLabel.text = nil
         publistedatLabel.text = nil
         titleLabel.text = nil
         discriptionLabel.text = nil
         contentImageView.image = nil
+        bookmarkButton.tintColor = .black
+        bookmarkButton.isSelected = false
     }
     
-    func setImage(model: NewsModel) {
+    func setImage(model: NewsViewModel) {
         if let urlStr = model.urlToImage, let url = URL(string: urlStr) {
             DispatchQueue.global().async {
                 do {
@@ -58,15 +68,13 @@ class NewsCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
     
     @IBAction func saveToBookmark(_ sender: UIButton) {
-        
+        delegate?.saveToBookmark(cell: self)
     }
     
-    @IBAction func shareContent(_ sender: Any) {
-        
+    @IBAction func sharePost(_ sender: Any) {
+        delegate?.sharePost(cell: self)
     }
-    
 }

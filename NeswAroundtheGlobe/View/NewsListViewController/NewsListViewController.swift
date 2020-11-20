@@ -12,11 +12,11 @@ class NewsListViewController: UIViewController {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    @IBOutlet weak var countryTextField: UITextField!
+    @IBOutlet private weak var countryTextField: UITextField!
     
-    @IBOutlet weak var categoryTextField: UITextField!
+    @IBOutlet private weak var categoryTextField: UITextField!
     
-    private var news: [NewsModel] = []
+    private var viewModels: [NewsViewModel] = []
     
     private let countryCategoryPicker = UIPickerView()
     
@@ -48,6 +48,12 @@ class NewsListViewController: UIViewController {
         reloadFeed()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if let index = self.tableView.indexPathForSelectedRow{
+            self.tableView.deselectRow(at: index, animated: true)
+        }
+    }
+    
     @objc
     func countryCategoryDoneTapped() {
         let row = countryCategoryPicker.selectedRow(inComponent: 0)
@@ -66,6 +72,21 @@ class NewsListViewController: UIViewController {
         reloadFeed()
     }
     
+    /// updates a single news in viewModels array after being picked favorite
+    func updateNews(news: NewsViewModel) {
+        guard let index = findNewsIndex(identifier: news.identifier) else { return }
+        viewModels[index] = news
+        tableView.reloadData()
+    }
+    
+    /// finds index of a single news in viewModels array by source.id
+    func findNewsIndex(identifier: UUID) -> Int? {
+        let newsIndex = viewModels.firstIndex(where: { internalNews -> Bool in
+            return internalNews.identifier == identifier
+        })
+        return newsIndex
+    }
+    
     //MARK: - Private
     
     private func getNews(page: Int) {
@@ -75,7 +96,10 @@ class NewsListViewController: UIViewController {
                 self.showError(error.localizedDescription)
                 print(error)
             } else {
-                self.news.append(contentsOf: news)
+                let viewModels = news.map({ model -> NewsViewModel in
+                    return NewsViewModel(source: model.source, author: model.author, title: model.title, description: model.description, url: model.url, urlToImage: model.urlToImage, publishedAt: model.publishedAt, content: model.content, isFavorite: false, identifier: UUID())
+                })
+                self.viewModels.append(contentsOf: viewModels)
                 self.totalResults = totalResults ?? 0
                 self.tableView.reloadData()
             }
@@ -83,7 +107,7 @@ class NewsListViewController: UIViewController {
     }
     
     private func reloadFeed() {
-        news = []
+        viewModels = []
         page = 1
         getNews(page: 1)
     }
@@ -106,7 +130,7 @@ class NewsListViewController: UIViewController {
         countryTextField.tintColor = UIColor.clear
         categoryTextField.tintColor = UIColor.clear
     }
-
+    
     private func showError(_ error: String) {
         let alertController = UIAlertController()
         alertController.message = error
@@ -119,26 +143,30 @@ class NewsListViewController: UIViewController {
 
 extension NewsListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return news.count
+        return viewModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell") as! NewsCell
-        let post = news[indexPath.row]
+        cell.delegate = self
+        let post = viewModels[indexPath.row]
         cell.authorLabel.text = post.author
         cell.discriptionLabel.text = post.description
         cell.publistedatLabel.text = post.publishedAt
         cell.titleLabel.text = post.title
         cell.setImage(model: post)
         
+        /// attached selected button to favorite post
+        cell.bookmarkButton.isSelected = post.isFavorite
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if indexPath.row == news.count - 1 {
-            if news.count < totalResults {
-                print(news.count)
+        if indexPath.row == viewModels.count - 1 {
+            if viewModels.count < totalResults {
+                print(viewModels.count)
                 print(totalResults)
                 spinner.startAnimating()
                 self.tableView.tableFooterView?.isHidden = false
@@ -153,7 +181,15 @@ extension NewsListViewController: UITableViewDataSource {
 
 //MARK: - UITableViewDelegate
 
-extension NewsListViewController: UITableViewDelegate {}
+extension NewsListViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "NewsWebViewController") as! NewsWebViewController
+        
+        vc.url = viewModels[indexPath.row].url
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
 
 //MARK: - UITextFieldDelegate
 
@@ -238,5 +274,35 @@ private extension NewsListViewController {
         
         categoryTextField.inputAccessoryView = toolbar
         categoryTextField.inputView = generalCategoryPicker
+    }
+}
+
+extension NewsListViewController: NewsCellDelegate {
+    
+    func saveToBookmark(cell: NewsCell) {
+        
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        var post = viewModels[indexPath.row]
+        
+        if !cell.bookmarkButton.isSelected {
+            /// changes post.isFavorite = true to put news to favorite and updates viewmodels array
+            post.isFavorite = true
+            NewsDataController.shared.add(news: post)
+            self.updateNews(news: post)
+            cell.bookmarkButton.isSelected = true
+        } else {
+            NewsDataController.shared.remove(news: post)
+            post.isFavorite = false
+            self.updateNews(news: post)
+            cell.bookmarkButton.isSelected = false
+        }
+    }
+    
+    func sharePost(cell: NewsCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let post = viewModels[indexPath.row]
+        let items = [post.url]
+        let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        present(activityVC, animated: true)
     }
 }
