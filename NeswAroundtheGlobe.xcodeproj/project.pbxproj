@@ -27,6 +27,7 @@
 		CFDF8CFC255952A100BD3E2C /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF8CFB255952A100BD3E2C /* NewsViewModel.swift */; };
 		CFDF8CFE25595D2700BD3E2C /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFDF8CFD25595D2700BD3E2C /* NewsService.swift */; };
 		CFDF8D01256545BA00BD3E2C /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFDF8D00256545BA00BD3E2C /* WebKit.framework */; };
+		CFDF8D4F2567C58D00BD3E2C /* NeswAroundtheGlobe.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CFDF8D4D2567C58D00BD3E2C /* NeswAroundtheGlobe.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		CFDF8CFB255952A100BD3E2C /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		CFDF8CFD25595D2700BD3E2C /* NewsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsService.swift; sourceTree = "<group>"; };
 		CFDF8D00256545BA00BD3E2C /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		CFDF8D4E2567C58D00BD3E2C /* NeswAroundtheGlobe.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NeswAroundtheGlobe.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				CFB5385425398E4000388488 /* Services */,
 				CFB5384F25397FC700388488 /* Model */,
 				CFB538432535AF0000388488 /* View */,
+				CFDF8D4C2567C56600BD3E2C /* CoreDataLayer */,
 				CF39DA0825348B3C00999F43 /* AppDelegate.swift */,
 				CF39DA0A25348B3C00999F43 /* SceneDelegate.swift */,
 				CF39DA0C25348B3C00999F43 /* ViewController.swift */,
@@ -182,6 +185,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CFDF8D4C2567C56600BD3E2C /* CoreDataLayer */ = {
+			isa = PBXGroup;
+			children = (
+				CFDF8D4D2567C58D00BD3E2C /* NeswAroundtheGlobe.xcdatamodeld */,
+			);
+			name = CoreDataLayer;
+			path = View/CoreDataLayer;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -261,6 +273,7 @@
 				CFB5385B2539B0A500388488 /* GeneralCategory.swift in Sources */,
 				CFB538492535B93B00388488 /* NewsWebViewController.swift in Sources */,
 				CFB5385F253AF89600388488 /* NetworkProvider.swift in Sources */,
+				CFDF8D4F2567C58D00BD3E2C /* NeswAroundtheGlobe.xcdatamodeld in Sources */,
 				CFB5384D2535C10A00388488 /* NewsCell.swift in Sources */,
 				CF39DA0B25348B3C00999F43 /* SceneDelegate.swift in Sources */,
 				CF4DE83F2543080E00A4F062 /* NewsDataController.swift in Sources */,
@@ -466,6 +479,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CFDF8D4D2567C58D00BD3E2C /* NeswAroundtheGlobe.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CFDF8D4E2567C58D00BD3E2C /* NeswAroundtheGlobe.xcdatamodel */,
+			);
+			currentVersion = CFDF8D4E2567C58D00BD3E2C /* NeswAroundtheGlobe.xcdatamodel */;
+			path = NeswAroundtheGlobe.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CF39D9FD25348B3B00999F43 /* Project object */;
 }
